@@ -1,4 +1,6 @@
 using Core.Entities;
+using Core.Helpers;
+using Core.Interfaces;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,9 @@ namespace API.Extensions
             services.AddDbContext<ApplicationDBContext>(
                 opts => opts.UseSqlServer(config.GetConnectionString("DBConnection"))
             );
+
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services
                 .AddIdentityCore<User>(opt =>
