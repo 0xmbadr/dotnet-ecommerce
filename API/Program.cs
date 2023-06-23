@@ -1,3 +1,4 @@
+using API.Extensions;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDBContext>(
-    opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection"))
-);
+// Register Application Services
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
