@@ -2,6 +2,7 @@ using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
 using DataAccess;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -25,7 +26,10 @@ namespace API.Extensions
                 {
                     opt.Password.RequireNonAlphanumeric = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDBContext>();
+                .AddEntityFrameworkStores<ApplicationDBContext>()
+                .AddSignInManager<SignInManager<User>>();
+
+            services.AddAuthentication();
 
             return services;
         }
