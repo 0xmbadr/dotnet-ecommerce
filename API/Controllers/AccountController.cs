@@ -14,18 +14,21 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
+        private readonly ITokenService _tokenService;
 
         public AccountController(
             IUnitOfWork uow,
             UserManager<User> userManager,
             IMapper mapper,
-            SignInManager<User> signInManager
+            SignInManager<User> signInManager,
+            ITokenService tokenService
         )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _uow = uow;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -43,7 +46,7 @@ namespace API.Controllers
             {
                 Name = user.Name,
                 UserName = user.UserName!,
-                Token = "Will be implemented"
+                Token = _tokenService.CreateToken(user)
             };
         }
 
@@ -55,7 +58,7 @@ namespace API.Controllers
             );
 
             if (user == null)
-                return BadRequest("This user doesn't exist");
+                return Unauthorized("No Registered User with this Username");
 
             var result = await _signInManager.CheckPasswordSignInAsync(
                 user,
@@ -70,7 +73,7 @@ namespace API.Controllers
             {
                 UserName = user.UserName!,
                 Name = user.Name,
-                Token = "Will be implemented"
+                Token = _tokenService.CreateToken(user)
             };
         }
     }

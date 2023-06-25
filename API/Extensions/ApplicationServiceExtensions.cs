@@ -1,3 +1,4 @@
+using API.Services;
 using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
@@ -20,6 +21,7 @@ namespace API.Extensions
 
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services
                 .AddIdentityCore<User>(opt =>
