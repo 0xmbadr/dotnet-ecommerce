@@ -3,7 +3,10 @@ using API.Services;
 using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
+using Core.Validators;
 using DataAccess;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +24,9 @@ namespace API.Extensions
             services.AddDbContext<ApplicationDBContext>(
                 opts => opts.UseSqlServer(config.GetConnectionString("DBConnection"))
             );
+
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>();
 
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();

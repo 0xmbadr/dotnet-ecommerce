@@ -11,7 +11,7 @@ namespace Core.Dtos
         public DateTime DateOfBirth { get; set; }
 
         [Required]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
         public string PhoneNumber { get; set; }
 
         [Required]
@@ -24,5 +24,12 @@ namespace Core.Dtos
         [Required]
         [StringLength(12, MinimumLength = 4)]
         public string Password { get; set; }
+    }
+
+    public enum Gender
+    {
+        Male,
+        Female,
+        Unknown
     }
 }
