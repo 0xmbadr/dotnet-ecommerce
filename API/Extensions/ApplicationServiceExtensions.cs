@@ -33,7 +33,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
 
             services
-                .AddIdentityCore<User>(opt =>
+                .AddIdentity<User, Role>(opt =>
                 {
                     opt.Password.RequireNonAlphanumeric = false;
                 })
