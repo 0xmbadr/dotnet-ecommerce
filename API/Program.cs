@@ -1,5 +1,6 @@
 using API.Extensions;
 using DataAccess;
+using DataAccess.Seed;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,5 +31,19 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Seed Data into DB
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var seed = services.GetService<SeedData>();
+    await seed.SeedDatabase();
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred during migration");
+}
 
 app.Run();

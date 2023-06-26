@@ -5,6 +5,7 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core.Validators;
 using DataAccess;
+using DataAccess.Seed;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,6 +32,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<SeedData, SeedData>();
 
             services
                 .AddIdentity<User, Role>(opt =>
