@@ -37,6 +37,19 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Register(UserRegisterDto registerDto)
         {
+            if (
+                await _userManager.Users.AnyAsync(
+                    u => u.NormalizedUserName == registerDto.UserName.ToLower()
+                )
+            )
+                return BadRequest("This UserName already exits");
+            if (
+                await _userManager.Users.AnyAsync(
+                    u => u.NormalizedEmail == registerDto.Email.ToUpper()
+                )
+            )
+                return BadRequest("Email is already registered.");
+
             var user = _mapper.Map<User>(registerDto);
             user.LastActive = DateTime.UtcNow;
 
