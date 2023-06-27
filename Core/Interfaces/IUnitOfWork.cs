@@ -4,5 +4,7 @@ namespace Core.Interfaces
     {
         IUserRepository Users { get; }
         IProductRepository Products { get; }
+
+        int Complete();
     }
 }

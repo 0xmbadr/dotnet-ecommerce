@@ -13,6 +13,13 @@ namespace DataAccess.Repos
             _context = context;
         }
 
+        public async Task<Product> CreateProduct(Product product)
+        {
+            await _context.Products.AddAsync(product);
+
+            return product;
+        }
+
         public async Task<List<Product>> GetProducts()
         {
             return await _context.Products.ToListAsync();

@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using AutoMapper;
+using Core.Dtos;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -11,9 +13,12 @@ namespace API.Controllers
     public class ProductController : BaseController
     {
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public ProductController(IUnitOfWork uow)
+        public ProductController(IUnitOfWork uow, IMapper mapper)
         {
+            _mapper = mapper;
+
             _uow = uow;
         }
 
@@ -35,9 +40,14 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Create()
+        public async Task<ActionResult<Product>> Create(CreateProductDto productDto)
         {
-            return Ok();
+            var product = _mapper.Map<Product>(productDto);
+            var result = await _uow.Products.CreateProduct(product);
+
+            _uow.Complete();
+
+            return Ok(result);
         }
     }
 }

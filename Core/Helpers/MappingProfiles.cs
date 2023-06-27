@@ -13,6 +13,7 @@ namespace Core.Helpers
                     dest => dest.UserName,
                     opt => opt.MapFrom(src => src.UserName.ToLower())
                 );
+            CreateMap<CreateProductDto, Product>();
         }
     }
 }
