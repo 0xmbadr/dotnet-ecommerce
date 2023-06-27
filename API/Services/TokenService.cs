@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
@@ -10,19 +11,30 @@ namespace API.Services
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;
+        private readonly UserManager<User> _userManager;
 
-        public TokenService(IConfiguration config)
+        public TokenService(IConfiguration config, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTKey"]!));
         }
 
-        public string CreateToken(User user, string existingToken = null)
+        public async Task<string> CreateToken(User user, string existingToken = null)
         {
             var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new(JwtRegisteredClaimNames.UniqueName, user.UserName!)
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            // foreach (var role in roles)
+            // {
+            //     claims.Add(new Claim(ClaimTypes.Role, role));
+            // }
 
             var expireDate = string.IsNullOrEmpty(existingToken)
                 ? DateTime.Now.AddDays(1)

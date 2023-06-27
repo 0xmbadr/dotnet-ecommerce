@@ -4,6 +4,6 @@ namespace Core.Interfaces
 {
     public interface ITokenService
     {
-        string CreateToken(User user, string existingToken = null);
+        Task<string> CreateToken(User user, string existingToken = null);
     }
 }

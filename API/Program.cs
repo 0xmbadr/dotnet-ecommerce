@@ -1,7 +1,5 @@
 using API.Extensions;
-using DataAccess;
 using DataAccess.Seed;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,5 +1,4 @@
 using System.Text.Json;
-using AutoMapper;
 using Core.Entities;
 using Core.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -10,18 +9,18 @@ namespace DataAccess.Seed
     public class SeedData
     {
         private readonly RoleManager<Role> _roleManager;
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDBContext _context;
-        private readonly IMapper __mapper;
 
         public SeedData(
             RoleManager<Role> roleManager,
-            ApplicationDBContext context,
-            IMapper _mapper
+            UserManager<User> userManager,
+            ApplicationDBContext context
         )
         {
-            __mapper = _mapper;
             _context = context;
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public async Task SeedDatabase()
@@ -29,6 +28,7 @@ namespace DataAccess.Seed
             await _context.Database.MigrateAsync();
             await SeedRoles();
             await SeedProducts();
+            await SeedUsers();
         }
 
         async Task SeedRoles()
@@ -57,6 +57,38 @@ namespace DataAccess.Seed
                     await _context.Products.AddAsync(product);
                 }
                 await _context.SaveChangesAsync();
+            }
+        }
+
+        async Task SeedUsers()
+        {
+            if (!_userManager.Users.Any())
+            {
+                var user = new User
+                {
+                    UserName = "Badr",
+                    Name = "Badr",
+                    Email = "badr@test.com",
+                    Gender = "Male",
+                    DateOfBirth = new DateTime(1998, 01, 31),
+                    LastActive = DateTime.UtcNow
+                };
+
+                var s = await _userManager.CreateAsync(user, "Pa$$w0rd");
+                await _userManager.AddToRoleAsync(user, RoleTypes.User.ToString());
+
+                var admin = new User
+                {
+                    UserName = "admin",
+                    Name = "admin",
+                    Email = "admin@test.com",
+                    Gender = "Unknown",
+                    DateOfBirth = new DateTime(1998, 01, 31),
+                    LastActive = DateTime.UtcNow
+                };
+
+                await _userManager.CreateAsync(admin, "Pa$$w0rd");
+                await _userManager.AddToRolesAsync(admin, Enum.GetNames<RoleTypes>());
             }
         }
     }

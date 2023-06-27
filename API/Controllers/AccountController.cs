@@ -62,7 +62,7 @@ namespace API.Controllers
             {
                 Name = user.Name,
                 UserName = user.UserName!,
-                Token = _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user)
             };
         }
 
@@ -90,7 +90,7 @@ namespace API.Controllers
             {
                 UserName = user.UserName!,
                 Name = user.Name,
-                Token = _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user)
             };
         }
     }

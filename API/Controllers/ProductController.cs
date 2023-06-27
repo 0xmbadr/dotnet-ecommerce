@@ -1,5 +1,10 @@
+using System.Security.Claims;
+using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -26,6 +31,13 @@ namespace API.Controllers
             var result = await _uow.Products.GetSingleProduct(id);
 
             return Ok(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult Create()
+        {
+            return Ok();
         }
     }
 }
