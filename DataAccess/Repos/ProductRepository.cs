@@ -29,5 +29,10 @@ namespace DataAccess.Repos
         {
             return await _context.Products.FindAsync(id);
         }
+
+        public void RemoveProduct(Product product)
+        {
+            _context.Products.Remove(product);
+        }
     }
 }

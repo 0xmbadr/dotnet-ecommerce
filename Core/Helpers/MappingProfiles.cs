@@ -14,6 +14,7 @@ namespace Core.Helpers
                     opt => opt.MapFrom(src => src.UserName.ToLower())
                 );
             CreateMap<CreateProductDto, Product>();
+            CreateMap<UpdateProductDto, Product>();
         }
     }
 }

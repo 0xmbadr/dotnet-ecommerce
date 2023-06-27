@@ -7,5 +7,7 @@ namespace Core.Interfaces
         Task<List<Product>> GetProducts();
         Task<Product> GetSingleProduct(int id);
         Task<Product> CreateProduct(Product product);
+
+        void RemoveProduct(Product product);
     }
 }
