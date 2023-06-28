@@ -8,6 +8,7 @@ namespace Core.Entities
         public string Gender { get; set; }
         public DateTime LastActive { get; set; }
         public string Name { get; set; }
+        public UserAddress Address { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
     }
 }

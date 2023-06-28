@@ -71,7 +71,7 @@ namespace DataAccess.Seed
                     Email = "badr@test.com",
                     Gender = "Male",
                     DateOfBirth = new DateTime(1998, 01, 31),
-                    LastActive = DateTime.UtcNow
+                    LastActive = DateTime.UtcNow,
                 };
 
                 var s = await _userManager.CreateAsync(user, "Pa$$w0rd");
