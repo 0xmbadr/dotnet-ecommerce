@@ -1,12 +1,11 @@
 using System.Security.Claims;
+using System.Threading.Tasks;
 using AutoMapper;
 using Core.Dtos;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {

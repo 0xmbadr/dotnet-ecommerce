@@ -12,11 +12,14 @@ namespace DataAccess
             _context = context;
             Products = new ProductRepository(_context);
             Users = new UserRepository(_context);
+            Baskets = new BasketRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
 
         public IProductRepository Products { get; private set; }
+
+        public IBasketRepository Baskets { get; private set; }
 
         public int Complete()
         {
