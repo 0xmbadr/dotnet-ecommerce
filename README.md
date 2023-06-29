@@ -22,3 +22,6 @@
 |`POST /api/product` | Add a new Product | CreateProductDto | Product | Admin | 
 |`PUT /api/product` | Update an existing Product &nbsp; | UpdateProductDto | Product | Admin |  
 |`DELETE /api/product/{id}` &nbsp; &nbsp; | Delete a product &nbsp; &nbsp; | None | None| Admin | 
+|`POST /api/order` | Create a new order | CreateProductDto | Product | User | 
+|`GET /api/order` | Get all orders for a specific user &nbsp; | List<OrderDto> | None | User |  
+|`GET /api/product/{id}` &nbsp; &nbsp; | Get A single order for a specific user &nbsp; &nbsp; | OrderDto | None| User | 
