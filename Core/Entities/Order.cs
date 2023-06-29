@@ -5,7 +5,7 @@ namespace Core.Entities
     public class Order
     {
         public int Id { get; set; }
-        public string BuyerId { get; set; }
+        public int BuyerId { get; set; }
 
         [Required]
         public ShippingAddress ShippingAddress { get; set; }

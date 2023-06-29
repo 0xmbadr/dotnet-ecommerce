@@ -13,7 +13,7 @@ namespace DataAccess.Repos
             _context = context;
         }
 
-        public async Task<Basket?> CreateBasket(int userId)
+        public async Task<Basket> CreateBasket(int userId)
         {
             var basket = new Basket { BuyerId = userId };
 
@@ -22,7 +22,12 @@ namespace DataAccess.Repos
             return basket;
         }
 
-        public async Task<Basket?> RetrieveBasket(int userId)
+        public void Delete(Basket basket)
+        {
+            _context.Baskets.Remove(basket);
+        }
+
+        public async Task<Basket> RetrieveBasket(int userId)
         {
             var basket = await _context.Baskets
                 .Include(i => i.Items)

@@ -1,4 +1,9 @@
+using Core.Entities;
+
 namespace Core.Interfaces
 {
-    public interface IUserRepository { }
+    public interface IUserRepository
+    {
+        Task<User> GetUserWithAddress(string username);
+    }
 }

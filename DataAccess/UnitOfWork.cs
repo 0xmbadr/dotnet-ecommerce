@@ -13,6 +13,7 @@ namespace DataAccess
             Products = new ProductRepository(_context);
             Users = new UserRepository(_context);
             Baskets = new BasketRepository(_context);
+            Orders = new OrderRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -20,6 +21,7 @@ namespace DataAccess
         public IProductRepository Products { get; private set; }
 
         public IBasketRepository Baskets { get; private set; }
+        public IOrderRepository Orders { get; private set; }
 
         public int Complete()
         {
