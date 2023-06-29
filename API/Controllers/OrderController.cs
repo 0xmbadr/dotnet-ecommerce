@@ -20,6 +20,22 @@ namespace API.Controllers
             _uow = uow;
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetOrders()
+        {
+            var userId = HttpContext.User.GetUserId();
+            var orders = await _uow.Orders.GetOrders(userId);
+            return Ok(orders);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetOrders(int id)
+        {
+            var userId = HttpContext.User.GetUserId();
+            var order = await _uow.Orders.GetSingleOrder(userId, id);
+            return Ok(order);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateOrder(CreateOrderDto orderDto)
         {
